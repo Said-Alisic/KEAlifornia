@@ -2,19 +2,22 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>KeaLifornia Rooms</title>
 
     <!--  Bootstrap  -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
 
-    <div class="container">
-        <h1>KeaLifornia</h1>
-        <a type="button" class="btn btn-secondary" href="/rooms">Rooms</a>
+<div class="container">
+    <h1>KeaLifornia</h1>
+<!--    <div>-->
+<!--        <form th:action="@{/rooms/add}" th:method="POST" th:object="${newRoom}">-->
+<!--            <label th:for="name">Name</label>-->
+<!--            <input th:field="*{name}">-->
+<!--        </form>-->
+<!--    </div>-->
 
-    </div>
-
-
+</div>
 </body>
 </html>
