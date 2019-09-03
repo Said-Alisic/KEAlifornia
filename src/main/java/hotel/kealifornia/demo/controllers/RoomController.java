@@ -34,7 +34,7 @@ public class RoomController {
 
     @PostMapping("/rooms/add")
     public String handleAddRoom(@ModelAttribute Room room) {
-
+        System.out.println(room.getName() + " " + room.getPrice() + "  " + room.getNumOfGuests());
         // TODO: 03/09/2019 - add roomRepo.addRoom(Room room) 
 
         return "redirect:/rooms?added";
