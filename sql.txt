@@ -1,0 +1,37 @@
+CREATE DATABASE IF NOT EXISTS hotel;
+
+USE hotel;
+
+CREATE TABLE IF NOT EXISTS rooms(
+    room_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    name VARCHAR(255),
+    price DOUBLE,
+    num_of_guests INT(2)
+);
+
+CREATE TABLE IF NOT EXISTS guests(
+    guest_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    phoneNo VARCHAR(255),
+    email VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS reservations(
+    reservation_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    check_in_day DATE,
+    check_out_day DATE,
+    guest_id INT,
+    room_id INT,
+    FOREIGN KEY (guest_id) REFERENCES guests (guest_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (room_id) REFERENCES rooms (room_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+SHOW TABLES;
+
+INSERT INTO rooms(name, price, num_of_guests) VALUES (
+                           'Family Room',
+                            139.99,
+                            3
+                          );
