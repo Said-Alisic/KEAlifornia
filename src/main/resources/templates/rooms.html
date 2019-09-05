@@ -22,6 +22,8 @@
                     <th scope="col">Room</th>
                     <th scope="col">Price</th>
                     <th scope="col">Guests</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,6 +31,8 @@
                     <td th:text="${room.name}"></td>
                     <td th:text="${room.price}"></td>
                     <td th:text="${room.numOfGuests}"></td>
+                    <td><a type="button" class="btn btn-warning" th:href="@{'/rooms/update/' + ${room.getRoomId()}}">Edit</a></td>
+                    <td><a type="button" class="btn btn-danger" th:href="@{'/rooms/delete/' + ${room.getRoomId()}}">Delete</a></td>
                 </tr>
             </tbody>
         </table>

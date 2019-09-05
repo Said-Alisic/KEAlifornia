@@ -24,8 +24,11 @@ public class RoomRepository implements IRepository<Room> {
     }
 
     @Override
-    public boolean readOne(String tableName, String value1, String value2) {
-        return false;
+    public Room readOne(String tableName, int id) {
+
+        // TODO: 05/09/2019 - Find one room specified by the given id 
+
+        return new Room();
     }
 
     @Override
@@ -44,13 +47,15 @@ public class RoomRepository implements IRepository<Room> {
     }
 
     @Override
-    public void update(String tableName, Room object) {
+    public void update(String tableName, int id, Room object) {
 
     }
 
     @Override
-    public void delete(String tableName, String columnName, String value) {
+    public void delete(String tableName, int id) {
 
+        // TODO: 05/09/2019 - Delete one room by the specified id
+        
     }
 
 

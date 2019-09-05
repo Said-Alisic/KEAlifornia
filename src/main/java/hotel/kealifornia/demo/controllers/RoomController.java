@@ -5,9 +5,7 @@ import hotel.kealifornia.demo.repositories.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,10 +32,35 @@ public class RoomController {
 
     @PostMapping("/rooms/add")
     public String handleAddRoom(@ModelAttribute Room room) {
-        System.out.println(room.getName() + " " + room.getPrice() + "  " + room.getNumOfGuests());
+        System.out.println("Test room: " + room.toString());
         // TODO: 03/09/2019 - add roomRepo.addRoom(Room room) 
 
         return "redirect:/rooms?added";
+    }
+
+
+    @PostMapping("/rooms/delete/{id}")
+    public String handleDeleteRoom(@PathVariable int id)  {
+
+        System.out.println("Test room delete by id: " + id);
+        // TODO: 05/09/2019 - add roomRepo.deleteRoom(int id)
+
+        return "redirect:/rooms?deleted";
+    }
+
+    @GetMapping("/rooms/update/{id}")
+    public String updateRoom(Model model, @PathVariable int id) {
+        model.addAttribute("updateRoom", roomRepo.readOne("", id));
+
+        return "update-room";
+    }
+
+    @PostMapping("/rooms/update/{id}")
+    public String handleUpdateRoom(@ModelAttribute Room room, @PathVariable int id) {
+
+        System.out.println("Test room handle update: " + room.toString());
+
+        return "redirect:/rooms?updated";
     }
 
 }

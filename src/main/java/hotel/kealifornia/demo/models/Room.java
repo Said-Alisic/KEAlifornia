@@ -38,4 +38,14 @@ public class Room {
     public void setNumOfGuests(int numOfGuests) {
         this.numOfGuests = numOfGuests;
     }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "roomId=" + roomId +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", numOfGuests=" + numOfGuests +
+                '}';
+    }
 }
