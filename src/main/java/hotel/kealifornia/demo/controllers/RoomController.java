@@ -17,7 +17,7 @@ public class RoomController {
 
     @GetMapping("/rooms")
     public String rooms(Model model) {
-        List<Room> rooms = roomRepo.readAll("");
+        List<Room> rooms = roomRepo.findAll();
         model.addAttribute("rooms", rooms);
 
         return "rooms";
@@ -32,9 +32,7 @@ public class RoomController {
 
     @PostMapping("/rooms/add")
     public String handleAddRoom(@ModelAttribute Room room) {
-        System.out.println("Test room: " + room.toString());
-
-        roomRepo.create("", room);
+        System.out.println(roomRepo.add(room));
 
         return "redirect:/rooms?added";
     }
@@ -42,15 +40,15 @@ public class RoomController {
 
     @GetMapping("/rooms/delete/{id}")
     public String handleDeleteRoom(@PathVariable int id)  {
-
-        roomRepo.delete("", id);
+        System.out.println(id);
+        roomRepo.delete(id);
 
         return "redirect:/rooms?deleted";
     }
 
     @GetMapping("/rooms/update/{id}")
     public String updateRoom(Model model, @PathVariable int id) {
-        model.addAttribute("updateRoom", roomRepo.readOne("", id));
+        model.addAttribute("updateRoom", roomRepo.findOne(id));
 
         return "update-room";
     }
