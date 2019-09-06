@@ -4,8 +4,10 @@ import hotel.kealifornia.demo.models.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository
@@ -43,8 +45,17 @@ public class RoomRepository implements IRepository<Room> {
     }
 
     @Override
-    public void create(String tableName, Room object) {
+    public void create(String tableName, Room room) {
 
+        String sql = "INSERT INTO rooms VALUES (null, ?, ?, ?)";
+
+        PreparedStatementCreator psc = Connection -> {
+            PreparedStatement ps = Connection.prepareStatement(sql, new String[]{"room_id"});
+            ps.setString(1, room.getName());
+            ps.setDouble(2, room.getPrice());
+            ps.setInt(3, room.getNumOfGuests());
+            return ps;
+        };
     }
 
     @Override
