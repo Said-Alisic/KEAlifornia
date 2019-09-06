@@ -33,7 +33,8 @@ public class RoomController {
     @PostMapping("/rooms/add")
     public String handleAddRoom(@ModelAttribute Room room) {
         System.out.println("Test room: " + room.toString());
-        // TODO: 03/09/2019 - add roomRepo.addRoom(Room room) 
+
+        roomRepo.create("", room);
 
         return "redirect:/rooms?added";
     }
