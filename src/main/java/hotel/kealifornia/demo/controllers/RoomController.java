@@ -39,11 +39,10 @@ public class RoomController {
     }
 
 
-    @PostMapping("/rooms/delete/{id}")
+    @GetMapping("/rooms/delete/{id}")
     public String handleDeleteRoom(@PathVariable int id)  {
 
-        System.out.println("Test room delete by id: " + id);
-        // TODO: 05/09/2019 - add roomRepo.deleteRoom(int id)
+        roomRepo.delete("", id);
 
         return "redirect:/rooms?deleted";
     }

@@ -26,7 +26,8 @@ public class RoomRepository implements IRepository<Room> {
     @Override
     public Room readOne(String tableName, int id) {
 
-        // TODO: 05/09/2019 - Find one room specified by the given id 
+        String sql = "SELECT * FROM rooms WHERE room_id = ?";
+        Room room = jdbc.queryForObject(sql, new Object[] {id}, new BeanPropertyRowMapper<>(Room.class));
 
         return new Room();
     }
@@ -54,7 +55,8 @@ public class RoomRepository implements IRepository<Room> {
     @Override
     public void delete(String tableName, int id) {
 
-        // TODO: 05/09/2019 - Delete one room by the specified id
+        String sql = "DELETE FROM rooms WHERE room_id = " + id;
+        jdbc.update(sql);
         
     }
 
