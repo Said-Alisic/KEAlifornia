@@ -32,9 +32,13 @@ public class RoomController {
 
     @PostMapping("/rooms/add")
     public String handleAddRoom(@ModelAttribute Room room) {
-        System.out.println(roomRepo.add(room));
+        try {
+            System.out.println(roomRepo.add(room));
+            return "redirect:/rooms?added";
+        } catch (Exception e) {
+            return "redirect:/rooms/add?error=true";
+        }
 
-        return "redirect:/rooms?added";
     }
 
 
@@ -56,9 +60,12 @@ public class RoomController {
     @PostMapping("/rooms/update/{id}")
     public String handleUpdateRoom(@ModelAttribute Room room, @PathVariable int id) {
 
-        System.out.println("Test room handle update: " + room.toString());
-
-        return "redirect:/rooms?updated";
+        try {
+            System.out.println("Test room handle update: " + room.toString());
+            return "redirect:/rooms?updated";
+        } catch (Exception e) {
+            return "redirect:/rooms/update/{id}?error";
+        }
     }
 
 }
