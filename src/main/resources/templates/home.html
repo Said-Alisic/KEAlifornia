@@ -1,18 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-
-    <!--  Bootstrap  -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<head th:replace="fragments/head :: head(title='KEAlifornia Home Page')">
 </head>
 <body>
+    <header th:replace="fragments/navbar :: navbar"></header>
 
     <div class="container">
-        <h1>KeaLifornia</h1>
-        <a type="button" class="btn btn-secondary" href="/rooms">Rooms</a>
 
+        <a href="/rooms" class="btn btn-secondary" >Rooms</a>
+        <a href="/reservations/search" class="btn btn-purple">New Reservation</a>
     </div>
 
 

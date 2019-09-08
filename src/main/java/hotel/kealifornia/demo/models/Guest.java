@@ -8,6 +8,17 @@ public class Guest {
     private String phoneNo;
     private String email;
 
+    public Guest() {
+    }
+
+    public Guest(int guestId, String firstName, String lastName, String phoneNo, String email) {
+        this.guestId = guestId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNo = phoneNo;
+        this.email = email;
+    }
+
     public int getGuestId() {
         return guestId;
     }
@@ -46,5 +57,16 @@ public class Guest {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "Guest{" +
+                "guestId=" + guestId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phoneNo='" + phoneNo + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }
