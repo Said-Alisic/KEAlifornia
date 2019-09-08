@@ -16,7 +16,21 @@ a:hover {
     color: #333;
     text-shadow: none; /* Prevent inheritance from `body` */
     background-color: #fff;
-    border: .05rem solid #fff;
+    border: .05rem solid #112;
+}
+
+.btn-purple,
+.btn-purple:hover,
+.btn-purple:focus {
+    color: #fff;
+    text-shadow: 1px 1px black;
+    background-color: #9c27b0;
+    border: .05rem solid #112;
+}
+
+.btn-purple:hover,
+.btn-purple:focus {
+    background-color: #6a0080;
 }
 
 
