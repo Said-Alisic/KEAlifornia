@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>KeaLifornia Rooms</title>
+<head th:replace="fragments/head :: head(title='Rooms')">
 
-    <!--  Bootstrap  -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
+    <header th:replace="fragments/navbar :: navbar"></header>
+
     <div class="container">
-        <h1>KeaLifornia</h1>
         <div>
             <nav class="navbar navbar-dark bg-dark">
-                <a type="button" class="btn btn-secondary" href="/rooms/add">Add room</a>
+                <a type="button" class="btn btn-secondary btn-add-room" href="/rooms/add">Add room</a>
             </nav>
         </div>
         <table class="table table-hover">
@@ -30,8 +27,8 @@
                     <td th:text="${room.name}"></td>
                     <td th:text="${room.price}"></td>
                     <td th:text="${room.numOfGuests}"></td>
-                    <td><a class="btn btn-warning" th:href="@{'/rooms/update/' + ${room.getRoomId()}}">Edit</a></td>
-                    <td><a class="btn btn-danger" th:href="@{'/rooms/delete/' + ${room.getRoomId()}}">Delete</a></td>
+                    <td><a class="btn btn-warning btn-edit-room" th:href="@{'/rooms/update/' + ${room.getRoomId()}}">Edit</a></td>
+                    <td><a class="btn btn-danger btn-delete-room" th:href="@{'/rooms/delete/' + ${room.getRoomId()}}">Delete</a></td>
                 </tr>
             </tbody>
         </table>

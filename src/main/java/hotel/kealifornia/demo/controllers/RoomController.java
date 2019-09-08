@@ -20,21 +20,21 @@ public class RoomController {
         List<Room> rooms = roomRepo.findAll();
         model.addAttribute("rooms", rooms);
 
-        return "rooms";
+        return "rooms/rooms";
     }
     
     @GetMapping("/rooms/add")
     public String addRoom(Model model) {
         model.addAttribute("newRoom", new Room());
 
-        return "add-room";
+        return "rooms/add-room";
     }
 
     @PostMapping("/rooms/add")
     public String handleAddRoom(@ModelAttribute Room room) {
         try {
             System.out.println(roomRepo.add(room));
-            return "redirect:/rooms?added";
+            return "redirect:/rooms";
         } catch (Exception e) {
             return "redirect:/rooms/add?error=true";
         }
@@ -47,14 +47,14 @@ public class RoomController {
         System.out.println(id);
         roomRepo.delete(id);
 
-        return "redirect:/rooms?deleted";
+        return "redirect:/rooms";
     }
 
     @GetMapping("/rooms/update/{id}")
     public String updateRoom(Model model, @PathVariable int id) {
         model.addAttribute("updateRoom", roomRepo.findOne(id));
 
-        return "update-room";
+        return "rooms/update-room";
     }
 
     @PostMapping("/rooms/update/{id}")
@@ -62,7 +62,7 @@ public class RoomController {
 
         try {
             System.out.println("Test room handle update: " + roomRepo.update(id, room));
-            return "redirect:/rooms?updated";
+            return "redirect:/rooms";
         } catch (Exception e) {
             return "redirect:/rooms/update/{id}?error";
         }

@@ -1,0 +1,19 @@
+
+
+/* Custom buttons for rooms view */
+.btn-add-room {
+    background-color: #9900cc !important;
+    border-color: #9900cc !important;
+    color: #e2e2e9;
+}
+
+.btn-edit-room {
+    background-color: #b6b6cb !important;
+    border-color: #b6b6cb !important;
+}
+
+.btn-delete-room {
+    background-color: darkred !important;
+    border-color: darkred !important;
+    color: #e2e2e9;
+}
