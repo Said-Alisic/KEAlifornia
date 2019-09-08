@@ -91,8 +91,9 @@ public class ReservationController {
                 // Validate check in date
                 if (checkIn.isEqual(reservation.getCheckInDay())
                         || (checkIn.isAfter(reservation.getCheckInDay()) && checkIn.isBefore(reservation.getCheckOutDay()))
-                        /* HERE IT IS KUBA! - Added line below to if-statement */
-                        || checkIn.isBefore(reservation.getCheckOutDay()) && !checkOut.isBefore(reservation.getCheckInDay())) {
+                        /* HERE IT IS KUBA! - Added 2 lines below to this if-statement */
+                        || (checkIn.isBefore(reservation.getCheckOutDay()) && (!checkOut.isBefore(reservation.getCheckInDay())
+                        && !checkOut.isEqual(reservation.getCheckInDay())))) {
                         return;
                 }
                 // Validate checkout date
