@@ -61,11 +61,13 @@ public class RoomController {
     public String handleUpdateRoom(@ModelAttribute Room room, @PathVariable int id) {
 
         try {
-            System.out.println("Test room handle update: " + room.toString());
+            System.out.println("Test room handle update: " + roomRepo.update(id, room));
             return "redirect:/rooms?updated";
         } catch (Exception e) {
             return "redirect:/rooms/update/{id}?error";
         }
+
+
     }
 
 }

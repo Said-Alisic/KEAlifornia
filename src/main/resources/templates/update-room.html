@@ -15,15 +15,15 @@
         <form th:action="@{'/rooms/update/' + ${id}}" th:method="POST" th:object="${updateRoom}">
             <div class="form-group">
                 <label th:for="name">Name</label>
-                <input type="text" class="form-control" aria-describedby="name" th:id="name" th:field="*{name}" required>
+                <input th:type="text" class="form-control" aria-describedby="name" th:id="name" th:field="*{name}" required>
             </div>
             <div class="form-group">
                 <label th:for="price">Price</label>
-                <input th:type="number" class="form-control" aria-describedby="price" th:id="price" th:field="*{price}" required>
+                <input th:type="number" class="form-control" th:step="0.01" aria-describedby="price" th:id="price" th:field="*{price}" required>
             </div>
             <div class="form-group">
                 <label th:for="numOfGuests">Guests</label>
-                <input type="number" class="form-control" aria-describedby="numOfGuests"  th:id="numOfGuests" th:field="*{numOfGuests}" required>
+                <input th:type="number" class="form-control" aria-describedby="numOfGuests" th:id="numOfGuests" th:field="*{numOfGuests}" required>
             </div>
             <button th:type="submit" class="btn btn-secondary" th:value="Submit">Submit</button>
             <button th:type="reset" class="btn btn-info" th:value="Reset">Reset</button>

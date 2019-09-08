@@ -4,12 +4,10 @@ import hotel.kealifornia.demo.models.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.List;
 
@@ -61,7 +59,18 @@ public class RoomRepository implements IRepository<Room> {
     @Override
     public Room update(int id, Room room) {
 
-        return null;
+        String sql = "UPDATE rooms SET name = ?, price = ?, num_of_guests = ? WHERE room_id = " + id;
+
+        jdbc.update(Connection -> {
+            PreparedStatement ps = Connection.prepareStatement(sql, new String[]{"room_id"});
+            ps.setString(1, room.getName());
+            ps.setDouble(2, room.getPrice());
+            ps.setInt(3, room.getNumOfGuests());
+
+            return ps;});
+
+        return room;
+
     }
 
     @Override
