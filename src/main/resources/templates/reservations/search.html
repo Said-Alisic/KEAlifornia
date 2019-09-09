@@ -11,7 +11,7 @@
             <div class="form-group mx-2">
                 <label for="checkInDate" class="mx-2">Check In Date</label>
                 <input th:if="${checkInDate}" class="form-control" type="date" name="checkInDate" id="checkInDate" th:value="${checkInDate}">
-                <input th:unless="${checkOutDate}" class="form-control" type="date" name="checkInDate" id="checkInDate">
+                <input th:unless="${checkInDate}" class="form-control" type="date" name="checkInDate" id="checkInDate">
             </div>
             <div class="form-group mx-2">
                 <label for="checkOutDate" class="mx-2">Check Out Date</label>
@@ -21,8 +21,6 @@
             <button type="submit" class="btn btn-purple mx-4">Search For Rooms</button>
         </form>
 
-
-    <!--        TODO: if condition in thymeleaf, show rooms if got from model -->
         <div class="" th:if="${rooms}">
             <h4 class="mt-5">Available Rooms</h4>
             <table class="table table-hover table-dark">
@@ -40,10 +38,14 @@
                     <td th:text="${room.name}"></td>
                     <td th:text="${room.numOfGuests}"></td>
                     <td th:text="${room.price + ' dkk'}"></td>
-                    <!--   TODO: multiply price by number of nights  -->
                     <td th:text="${(room.price * daysOfStay) + ' dkk'}"></td>
-                    <td><button class="btn btn-purple">Book</button></td>
-                    <!--                <td><a class="btn btn-danger" th:href="@{'/rooms/delete/' + ${room.getRoomId()}}">Delete</a></td>-->
+                    <td>
+                        <a
+                           th:href="@{'/reservations/add/' + ${room.roomId} + '/' +  ${checkInDate} + '/' + ${checkOutDate}}"
+                           class="btn btn-purple">
+                            Book
+                        </a>
+                    </td>
                 </tr>
                 </tbody>
             </table>

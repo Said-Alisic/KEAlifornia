@@ -22,8 +22,6 @@
                 <th scope="col">Check in</th>
                 <th scope="col">Check Out</th>
                 <th scope="col">Total</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Delete</th>
             </tr>
             </thead>
             <tbody>
@@ -33,8 +31,6 @@
                 <td th:text="${reservation.checkInDay}"></td>
                 <td th:text="${reservation.checkOutDay}"></td>
                 <td th:text="${reservation.total + ' dkk'}"></td>
-<!--                <td><a class="btn btn-warning" th:href="@{'/rooms/update/' + ${room.getRoomId()}}">Edit</a></td>-->
-<!--                <td><a class="btn btn-danger" th:href="@{'/rooms/delete/' + ${room.getRoomId()}}">Delete</a></td>-->
             </tr>
             </tbody>
         </table>

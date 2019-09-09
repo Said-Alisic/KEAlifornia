@@ -1,16 +1,15 @@
 package hotel.kealifornia.demo.controllers;
 
+import hotel.kealifornia.demo.models.Guest;
 import hotel.kealifornia.demo.models.Reservation;
 import hotel.kealifornia.demo.models.Room;
+import hotel.kealifornia.demo.repositories.GuestRepository;
 import hotel.kealifornia.demo.repositories.ReservationRepository;
 import hotel.kealifornia.demo.repositories.RoomRepository;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -26,6 +25,9 @@ public class ReservationController {
 
     @Autowired
     RoomRepository roomRepo;
+
+    @Autowired
+    GuestRepository guestRepo;
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -47,9 +49,6 @@ public class ReservationController {
 
     @PostMapping("/reservations/search")
     public String displayAvailableRooms(@RequestParam String checkInDate, @RequestParam String checkOutDate, Model m) {
-        System.out.println("check in " + checkInDate);
-        System.out.println("check out " + checkOutDate);
-
         // Convert request dates string into LocalDate objects
         LocalDate checkIn = LocalDate.parse(checkInDate, formatter);
         LocalDate checkOut = LocalDate.parse(checkOutDate, formatter);
@@ -68,10 +67,52 @@ public class ReservationController {
         return "reservations/search";
     }
 
+    @GetMapping("/reservations/add/{roomId}/{checkInDate}/{checkOutDate}")
+    public String displayBookingPage(
+            @PathVariable int roomId,
+            @PathVariable String checkInDate,
+            @PathVariable String checkOutDate,
+            Model m) {
+
+        LocalDate checkIn = LocalDate.parse(checkInDate, formatter);
+        LocalDate checkOut = LocalDate.parse(checkOutDate, formatter);
+        Room room = roomRepo.findOne(roomId);
+
+        Reservation reservation = new Reservation();
+        // Set total price
+        reservation.setTotal(room.getPrice() * getNumberOfDaysBetween(checkIn, checkOut));
+        reservation.setCheckInDay(checkIn);
+        reservation.setCheckOutDay(checkOut);
+        reservation.setRoom(room);
+
+        m.addAttribute("reservation", reservation);
+
+        return "reservations/add";
+    }
+
+
+    @PostMapping("/reservations/add/{checkInDate}/{checkOutDate}")
+    public String addReservation(@ModelAttribute Reservation reservation, @PathVariable String checkInDate, @PathVariable String checkOutDate) {
+
+        LocalDate checkIn = LocalDate.parse(checkInDate, formatter);
+        LocalDate checkOut = LocalDate.parse(checkOutDate, formatter);
+
+        reservation.setCheckInDay(checkIn);
+        reservation.setCheckOutDay(checkOut);
+
+        // Add New Guest to db, get back id
+        Guest guest = guestRepo.add(reservation.getGuest());
+        // Set guest id that was added to db
+        reservation.getGuest().setGuestId(guest.getGuestId());
+        // Add New reservation to db
+        reservationRepo.add(reservation);
+
+        return "redirect:/reservations";
+    }
 
     // === HELPER methods ===
     // Calculates days in between provided days
-    private Object getNumberOfDaysBetween(LocalDate checkInDate, LocalDate checkOutDate) {
+    private int getNumberOfDaysBetween(LocalDate checkInDate, LocalDate checkOutDate) {
 
         Period period = Period.between(checkInDate, checkOutDate);
 
@@ -80,33 +121,29 @@ public class ReservationController {
 
     // Helper method that filters out available rooms in provided period
     private List<Room> getAvailableRoomsBetweenDates(List<Room> allRooms, LocalDate checkIn, LocalDate checkOut) {
-        // TODO: finish this method. a Lot of magic involved
         List<Room> availableRooms = new ArrayList<>();
 
         // Loop over rooms which have lists of reservations
-        allRooms.forEach(room -> {
-            // Loop over room's reservations
-            room.getReservations().forEach(reservation -> {
-                // Check if dates are overlapping - logic and stuff
-                // Validate check in date
-                if (checkIn.isEqual(reservation.getCheckInDay())
-                        || (checkIn.isAfter(reservation.getCheckInDay()) && checkIn.isBefore(reservation.getCheckOutDay()))
-                        /* HERE IT IS KUBA! - Added 2 lines below to this if-statement */
-                        || (checkIn.isBefore(reservation.getCheckOutDay()) && (!checkOut.isBefore(reservation.getCheckInDay())
-                        && !checkOut.isEqual(reservation.getCheckInDay())))) {
-                        return;
+        for (int i = 0; i < allRooms.size(); i++) {
+            Room room = allRooms.get(i);
+            List<Reservation> reservations = room.getReservations();
+            // Check if dates are overlapping - logic and stuff
+            for (int j = 0; j < reservations.size(); j++) {
+                if (checkIn.isEqual(reservations.get(j).getCheckInDay())
+                        || checkIn.isAfter(reservations.get(j).getCheckInDay()) && checkIn.isBefore(reservations.get(j).getCheckOutDay())
+                        || checkIn.isBefore(reservations.get(j).getCheckInDay()) && checkOut.isAfter(reservations.get(j).getCheckInDay())
+                        || checkIn.isAfter(reservations.get(j).getCheckInDay()) && checkOut.isAfter(reservations.get(j).getCheckInDay()) && checkIn.isBefore(reservations.get(j).getCheckOutDay())
+                        || checkOut.isAfter(reservations.get(j).getCheckInDay()) && checkOut.isBefore(reservations.get(j).getCheckOutDay())) {
+                    break;
                 }
-                // Validate checkout date
-                if (checkOut.isAfter(reservation.getCheckInDay()) && checkOut.isBefore(reservation.getCheckOutDay())) {
-                    return;
-                }
-                System.out.println("inside lambda!");
-                // If passed, add room to the available
+
+                // If passed, add room to the available if not there yet
                 if (!availableRooms.contains(room)) {
-                   availableRooms.add(room);
-                };
-            });
-        });
+                    availableRooms.add(room);
+                }
+            }
+
+        }
 
         return availableRooms;
     }

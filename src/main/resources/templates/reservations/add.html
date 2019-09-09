@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head(title='Add Reservation')"></head>
+<body>
+
+    <header th:replace="fragments/navbar :: navbar"></header>
+
+    <div class="container mb-4">
+        <h4 class="mt-4 mb-4">New Reservation</h4>
+        <form th:action="@{'/reservations/add/' + ${reservation.checkInDay} + '/' + ${reservation.checkOutDay} }" th:object="${reservation}" method="post">
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group mx-2">
+                        <label for="checkInDate" class="mx-2">Check In Date</label>
+                        <input class="form-control" type="date" name="checkInDate" id="checkInDate" th:value="${reservation.checkInDay}" readonly>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group mx-2">
+                        <label for="checkOutDate" class="mx-2">Check Out Date</label>
+                        <input class="form-control" type="date" name="checkOutDate" id="checkOutDate" th:value="${reservation.checkOutDay}" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <h4 class="mt-5">Room:</h4>
+
+                <table class="table table-hover table-dark">
+                    <thead>
+                    <tr>
+                        <th scope="col">Room</th>
+                        <th scope="col">Number of Guests</th>
+                        <th scope="col">Price per night</th>
+                        <th scope="col">Total price</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <input type="text" class="d-none" readonly th:field="${reservation.room.roomId}" th:value="${reservation.room.roomId}">
+                            <input type="text" th:field="${reservation.room.name}" th:value="${reservation.room.name}" readonly>
+                        </td>
+                        <td>
+                            <input type="text" th:field="${reservation.room.numOfGuests}" th:value="${reservation.room.numOfGuests}" readonly>
+                        </td>
+                        <td>
+                            <input type="text" th:field="${reservation.room.price}" th:value="${reservation.room.price}" readonly>
+                        </td>
+                        <td>
+                            <input type="text" th:field="${reservation.total}" th:value="${reservation.total}" readonly>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input class="form-control" type="text" name="firstName" id="firstName" th:field="${reservation.guest.firstName}">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input class="form-control" type="text" name="firstName" id="lastName" th:field="${reservation.guest.lastName}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input class="form-control" type="text" name="phoneNo" id="email" th:field="${reservation.guest.email}">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="phoneNo">Phone Number</label>
+                        <input class="form-control" type="text" name="phoneNo" id="phoneNo" th:field="${reservation.guest.phoneNo}">
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-purple mx-4">Book Room</button>
+        </form>
+
+
+
+
+
+
+    </div>
+</body>
+</html>
