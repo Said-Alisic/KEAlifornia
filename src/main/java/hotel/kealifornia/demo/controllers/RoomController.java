@@ -66,8 +66,5 @@ public class RoomController {
         } catch (Exception e) {
             return "redirect:/rooms/update/{id}?error";
         }
-
-
     }
-
 }

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head(title='Add Reservation')"></head>
+<body>
+
+    <header th:replace="fragments/navbar :: navbar"></header>
+
+    <div class="container mb-4">
+        <h4 class="mt-4 mb-4">New Reservation</h4>
+        <form class="form-inline" th:action="@{/reservations/search}" method="post">
+            <div class="form-group mx-2">
+                <label for="checkInDate" class="mx-2">Check In Date</label>
+                <input th:if="${checkInDate}" class="form-control" type="date" name="checkInDate" id="checkInDate" th:value="${checkInDate}">
+                <input th:unless="${checkInDate}" class="form-control" type="date" name="checkInDate" id="checkInDate">
+            </div>
+            <div class="form-group mx-2">
+                <label for="checkOutDate" class="mx-2">Check Out Date</label>
+                <input th:if="${checkOutDate}" class="form-control" type="date" name="checkOutDate" id="checkOutDate" th:value="${checkOutDate}">
+                <input th:unless="${checkOutDate}" class="form-control" type="date" name="checkOutDate" id="checkOutDate">
+            </div>
+            <button type="submit" class="btn btn-purple mx-4">Search For Rooms</button>
+        </form>
+
+        <div class="" th:if="${rooms}">
+            <h4 class="mt-5">Available Rooms</h4>
+            <table class="table table-hover table-dark">
+                <thead>
+                <tr>
+                    <th scope="col">Room</th>
+                    <th scope="col">Number of Guests</th>
+                    <th scope="col">Price per night</th>
+                    <th scope="col">Total price</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="room : ${rooms}">
+                    <td th:text="${room.name}"></td>
+                    <td th:text="${room.numOfGuests}"></td>
+                    <td th:text="${room.price + ' dkk'}"></td>
+                    <td th:text="${(room.price * daysOfStay) + ' dkk'}"></td>
+                    <td>
+                        <a
+                           th:href="@{'/reservations/add/' + ${room.roomId} + '/' +  ${checkInDate} + '/' + ${checkOutDate}}"
+                           class="btn btn-purple">
+                            Book
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</body>
+</html>

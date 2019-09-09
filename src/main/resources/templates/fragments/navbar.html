@@ -3,12 +3,12 @@
     <body>
         <header class="masthead mb-5 mt-2" th:fragment="navbar">
             <div class="inner container">
-                <h3 class="masthead-brand">KEAlifornia</h3>
+                <h2 class="masthead-brand">
+                    <a href="/">KEAlifornia</a>
+                </h2>
                 <nav class="nav nav-masthead justify-content-center">
-                    <a th:if="${#httpServletRequest.requestURI != '/rooms'}"class="nav-link" href="/rooms">Rooms</a>
-                    <a th:if="${#httpServletRequest.requestURI == '/rooms'}" class="nav-link active" href="/reservations">Rooms</a>
-                    <a th:if="${#httpServletRequest.requestURI != '/reservations'}" class="nav-link" href="/reservations">Reservations</a>
-                    <a th:if="${#httpServletRequest.requestURI == '/reservations'}" class="nav-link active" href="/reservations">Reservations</a>
+                    <a class="nav-link" href="/rooms" th:classappend="${#request.requestURI == '/rooms' ? 'active' : ''}">Rooms</a>
+                    <a class="nav-link" href="/reservations" th:classappend="${#request.requestURI == '/reservations' ? 'active' : ''}">Reservations</a>
                 </nav>
             </div>
         </header>

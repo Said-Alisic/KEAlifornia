@@ -1,11 +1,14 @@
 package hotel.kealifornia.demo.models;
 
+import java.util.List;
+
 public class Room {
 
     private int roomId;
     private String name;
     private double price;
     private int numOfGuests;
+    private List<Reservation> reservations;
 
     public int getRoomId() {
         return roomId;
@@ -39,6 +42,14 @@ public class Room {
         this.numOfGuests = numOfGuests;
     }
 
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
     @Override
     public String toString() {
         return "Room{" +
@@ -46,6 +57,7 @@ public class Room {
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", numOfGuests=" + numOfGuests +
+                ", reservations=" + reservations +
                 '}';
     }
 }

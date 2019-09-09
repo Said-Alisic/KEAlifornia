@@ -7,8 +7,34 @@
     <header th:replace="fragments/navbar :: navbar"></header>
 
     <div class="container">
-        <h1>Reservations</h1>
-        <button class="btn btn-danger">This is my button</button>
+
+        <div>
+            <nav class="navbar navbar-dark bg-dark d-flex justify-content-between">
+                <h5>Reservations</h5>
+                <a class="btn btn-purple" href="/reservations/search">Add Reservation</a>
+            </nav>
+        </div>
+        <table class="table table-hover table-dark">
+            <thead>
+            <tr>
+                <th scope="col">Guest</th>
+                <th scope="col">Room</th>
+                <th scope="col">Check in</th>
+                <th scope="col">Check Out</th>
+                <th scope="col">Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="reservation : ${reservations}">
+                <td th:text="${reservation.guest.firstName + ' ' + reservation.guest.lastName}"></td>
+                <td th:text="${reservation.room.name}"></td>
+                <td th:text="${reservation.checkInDay}"></td>
+                <td th:text="${reservation.checkOutDay}"></td>
+                <td th:text="${reservation.total + ' dkk'}"></td>
+            </tr>
+            </tbody>
+        </table>
+
     </div>
 </body>
 </html>
