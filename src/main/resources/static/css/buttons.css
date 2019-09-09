@@ -1,0 +1,45 @@
+
+
+/* Custom buttons for rooms view */
+.btn-info {
+    background-color: #9900cc;
+    color: #e2e2e9;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+    border: .05rem solid black;
+}
+
+.btn-info:hover,
+.btn-info:focus,
+.btn-info:active {
+    background-color: #730099;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+    border: .05rem solid #730099;
+}
+
+.btn-warning {
+    background-color: #b6b6cb;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+    border: .05rem solid #b6b6cb;
+}
+.btn-warning:hover,
+.btn-warning:focus,
+.btn-warning:active {
+    background-color: #8787ab;
+    border: .05rem solid #8787ab;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.btn-danger {
+    background-color: darkred;
+    color: #e2e2e9;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+    border: .05rem solid darkred;
+}
+
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger:active {
+    background-color: #800000;
+    border: .05rem solid #800000;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
