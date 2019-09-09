@@ -4,7 +4,8 @@ import hotel.kealifornia.demo.models.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
@@ -17,7 +18,7 @@ public class RoomRepository implements IRepository<Room> {
     JdbcTemplate jdbc;
 
     @Override
-    public List<Room> readAll(String tableName) {
+    public List<Room> findAll() {
 
         String sql = "SELECT * FROM rooms;";
         List<Room> rooms = jdbc.query(sql, new BeanPropertyRowMapper<>(Room.class));
@@ -26,49 +27,59 @@ public class RoomRepository implements IRepository<Room> {
     }
 
     @Override
-    public Room readOne(String tableName, int id) {
+    public Room findOne(int id) {
 
         String sql = "SELECT * FROM rooms WHERE room_id = ?";
         Room room = jdbc.queryForObject(sql, new Object[] {id}, new BeanPropertyRowMapper<>(Room.class));
 
-        return new Room();
+        return room;
     }
 
-    @Override
-    public Room read(String tableName, String columnName, String value) {
-        return null;
-    }
 
     @Override
-    public Room readId(int id) {
-        return null;
-    }
-
-    @Override
-    public void create(String tableName, Room room) {
+    public Room add(Room room) throws NullPointerException {
 
         String sql = "INSERT INTO rooms VALUES (null, ?, ?, ?)";
 
-        PreparedStatementCreator psc = Connection -> {
+        KeyHolder keyholder = new GeneratedKeyHolder();
+
+        jdbc.update(Connection -> {
             PreparedStatement ps = Connection.prepareStatement(sql, new String[]{"room_id"});
             ps.setString(1, room.getName());
             ps.setDouble(2, room.getPrice());
             ps.setInt(3, room.getNumOfGuests());
-            return ps;
-        };
+
+            return ps;}, keyholder);
+
+        room.setRoomId(keyholder.getKey().intValue());
+
+        return room;
     }
 
     @Override
-    public void update(String tableName, int id, Room object) {
+    public Room update(int id, Room room) {
+
+        String sql = "UPDATE rooms SET name = ?, price = ?, num_of_guests = ? WHERE room_id = " + id;
+
+        jdbc.update(Connection -> {
+            PreparedStatement ps = Connection.prepareStatement(sql, new String[]{"room_id"});
+            ps.setString(1, room.getName());
+            ps.setDouble(2, room.getPrice());
+            ps.setInt(3, room.getNumOfGuests());
+
+            return ps;});
+
+        return room;
 
     }
 
     @Override
-    public void delete(String tableName, int id) {
+    public Room delete(int id) {
 
         String sql = "DELETE FROM rooms WHERE room_id = " + id;
         jdbc.update(sql);
-        
+
+        return null;
     }
 
 

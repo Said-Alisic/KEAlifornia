@@ -1,0 +1,17 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+    <body>
+        <header class="masthead mb-5 mt-2" th:fragment="navbar">
+            <div class="inner container">
+                <h3 class="masthead-brand">KEAlifornia</h3>
+                <nav class="nav nav-masthead justify-content-center">
+                    <a th:if="${#httpServletRequest.requestURI != '/rooms'}"class="nav-link" href="/rooms">Rooms</a>
+                    <a th:if="${#httpServletRequest.requestURI == '/rooms'}" class="nav-link active" href="/reservations">Rooms</a>
+                    <a th:if="${#httpServletRequest.requestURI != '/reservations'}" class="nav-link" href="/reservations">Reservations</a>
+                    <a th:if="${#httpServletRequest.requestURI == '/reservations'}" class="nav-link active" href="/reservations">Reservations</a>
+                </nav>
+            </div>
+        </header>
+    </body>
+
+</html>

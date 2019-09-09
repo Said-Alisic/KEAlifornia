@@ -1,24 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>KeaLifornia Rooms</title>
+<head th:replace="fragments/head :: head(title='Rooms')">
 
-    <!--  Bootstrap  -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
+    <header th:replace="fragments/navbar :: navbar"></header>
+
     <div class="container">
-        <h1>KeaLifornia</h1>
-        <div>
+        <div >
             <nav class="navbar navbar-dark bg-dark">
-                <a type="button" class="btn btn-secondary" href="/rooms/add">Add room</a>
+                <h5>Rooms</h5>
+                <a type="button" class="btn btn-info col col-lg-2" href="/rooms/add">Add room</a>
             </nav>
         </div>
-        <table class="table table-hover">
+        <table class="table table-dark table-hover">
             <thead>
                 <tr>
-                    <th scope="col">Room</th>
+                    <th scope="col">Name</th>
                     <th scope="col">Price</th>
                     <th scope="col">Guests</th>
                     <th scope="col">Edit</th>
