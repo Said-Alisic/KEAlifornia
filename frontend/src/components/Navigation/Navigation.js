@@ -5,10 +5,10 @@ import './Navigation.css';
 
 const Navigation = props => {
   return (
-    <header className="masthead mb-5 mt-2">
+    <header className="masthead mb-5">
       <div className="inner container">
         <h2 className="masthead-brand">
-          <a href="/">KEAlifornia</a>
+          <NavLink to="/">KEAlifornia</NavLink>
         </h2>
         <nav className="nav nav-masthead justify-content-center">
           <NavLink className="nav-link" to="/rooms">Rooms</NavLink>

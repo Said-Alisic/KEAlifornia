@@ -2,7 +2,9 @@
  * Header
  */
  .masthead {
+  height: 50px;
   margin-bottom: 2rem;
+  background: rgba(0,0,0, .09);
 }
 
 .masthead-brand {
