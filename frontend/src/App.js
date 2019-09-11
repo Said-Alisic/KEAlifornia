@@ -1,25 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter, Route } from 'react-router-dom';
+
+import HomePage from 'pages/HomePage';
+import ReservationsPage from 'pages/ReservationsPage';
+import RoomsPage from 'pages/RoomsPage';
+
+import Navigation from 'components/Navigation/Navigation';
+
 import './App.css';
 
 function App () {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          This is my new paragraph
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+
+      <Navigation />
+
+      <main className="main-content">
+        <Route path='/' exact component={HomePage} />
+        <Route path='/reservations' exact component={ReservationsPage} />
+        <Route path='/rooms' exact component={RoomsPage} />
+      </main>
+
+    </BrowserRouter>
   );
 }
 
