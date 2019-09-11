@@ -29,13 +29,14 @@ public class RoomRepository implements IRepository<Room> {
 
     @Override
     public List<Room> findAll() {
-        String sql =
-                "SELECT r.room_id as roomId, r.name, r.price, r.num_of_guests," +
-                   " res.reservation_id as reservations_reservation_id, res.check_in_day as reservations_check_in_day," +
-                   " res.check_out_day as reservations_check_out__day" +
-                 " FROM rooms r" +
-                    " JOIN reservations res ON res.room_id = r.room_id;";
+//        String sql =
+//                "SELECT r.room_id as roomId, r.name, r.price, r.num_of_guests," +
+//                   " res.reservation_id as reservations_reservation_id, res.check_in_day as reservations_check_in_day," +
+//                   " res.check_out_day as reservations_check_out__day" +
+//                 " FROM rooms r" +
+//                    " JOIN reservations res ON res.room_id = r.room_id;";
 
+        String sql = "SELECT * FROM rooms";
 
 
         List<Room> rooms = jdbc.query(sql, resultSetExtractor);

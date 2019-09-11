@@ -9,18 +9,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class RoomController {
 
     @Autowired
     RoomRepository roomRepo;
 
     @GetMapping("/rooms")
-    public String rooms(Model model) {
+    @ResponseBody
+    public List<Room> rooms() {
         List<Room> rooms = roomRepo.findAll();
-        model.addAttribute("rooms", rooms);
 
-        return "rooms/rooms";
+        return rooms;
     }
     
     @GetMapping("/rooms/add")
