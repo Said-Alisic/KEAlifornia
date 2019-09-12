@@ -4,6 +4,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import HomePage from 'pages/HomePage';
 import ReservationsPage from 'pages/ReservationsPage';
 import RoomsPage from 'pages/RoomsPage';
+import GuestsPage from 'pages/GuestsPage';
 
 import Navigation from 'components/Navigation/Navigation';
 
