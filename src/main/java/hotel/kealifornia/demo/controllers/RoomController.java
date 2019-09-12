@@ -17,7 +17,7 @@ public class RoomController {
 
     @GetMapping("/rooms")
     @ResponseBody
-    public List<Room> rooms() {
+    public List<Room> getAll() {
         List<Room> rooms = roomRepo.findAll();
 
         return rooms;

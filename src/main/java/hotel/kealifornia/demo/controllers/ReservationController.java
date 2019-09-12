@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 public class ReservationController {
 
     @Autowired
@@ -32,12 +32,12 @@ public class ReservationController {
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @GetMapping("/reservations")
-    public String reservationsPage(Model m) {
+    @ResponseBody
+    public List<Reservation> getAll() {
 
         List<Reservation> reservations = reservationRepo.findAll();
-        m.addAttribute("reservations", reservations);
 
-        return "reservations/reservations";
+        return reservations;
     }
 
 

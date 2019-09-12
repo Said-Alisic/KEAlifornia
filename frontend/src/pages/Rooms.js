@@ -1,32 +1,26 @@
 import React, { useState, useEffect } from 'react';
+import { fetchRooms } from 'repository/Repository';
+
+import Container from 'components/Container/Container';
 
 const RoomsPage = props => {
 
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
-    fetchRooms();
+    fetchRooms()
+      .then(res => setRooms(res.data));
   }, [])
 
-  const fetchRooms = () => {
-    fetch('http://localhost:8080/rooms')
-      .then(res => {
-        return res.json();
-      })
-      .then(rooms => {
-        setRooms(rooms);
-      })
-  }
-
   return (
-    <div className='container mt-4'>
-      <h1>Rooms Page</h1>
+    <Container>
+      <h2>Rooms Page</h2>
       <ul>
         {rooms.map(room => {
           return <li>{room.name}</li>
         })}
       </ul>
-    </div>
+    </Container>
   )
 }
 
