@@ -19,6 +19,7 @@ function App () {
         <Route path='/' exact component={HomePage} />
         <Route path='/reservations' exact component={ReservationsPage} />
         <Route path='/rooms' exact component={RoomsPage} />
+        <Route path='/guests' exact component={GuestsPage} />
       </main>
 
     </BrowserRouter>

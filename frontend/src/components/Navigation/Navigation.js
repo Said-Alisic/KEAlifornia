@@ -13,6 +13,7 @@ const Navigation = props => {
         <nav className="nav nav-masthead justify-content-center">
           <NavLink className="nav-link" to="/rooms">Rooms</NavLink>
           <NavLink className="nav-link" to="/reservations">Reservations</NavLink>
+          <NavLink className="nav-link" to="/guests">Guests</NavLink>
         </nav>
       </div>
     </header>
