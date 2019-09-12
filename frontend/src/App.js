@@ -1,7 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
+
 import HomePage from 'pages/Home';
+import GuestsPage from 'pages/GuestsPage';
 import ReservationsPage from 'pages/Reservations';
 import RoomsPage from 'pages/Rooms';
 import AddReservationPage from 'pages/AddReservation';
@@ -21,6 +23,7 @@ function App () {
         <Route path='/reservations' exact component={ReservationsPage} />
         <Route path='/reservations/add' exact component={AddReservationPage} />
         <Route path='/rooms' exact component={RoomsPage} />
+        <Route path='/guests' exact component={GuestsPage} />
       </main>
 
     </BrowserRouter>

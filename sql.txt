@@ -2,22 +2,30 @@ CREATE DATABASE IF NOT EXISTS hotel;
 
 USE hotel;
 
+CREATE TABLE IF NOT EXISTS hotels(
+    hotel_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    name VARCHAR(255)
+);
+
+
 CREATE TABLE IF NOT EXISTS rooms(
     room_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     name VARCHAR(255),
     price DOUBLE,
-    num_of_guests INT(2)
+    num_of_guests INT(2),
+    hotel_id INT,
+    FOREIGN KEY (hotel_id) REFERENCES hotels(hotel_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS guests(
+CREATE TABLE IF NOT EXISTS guests (
     guest_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    first_name VARCHAR(255),
-    last_name VARCHAR(255),
+    name VARCHAR(255),
     phoneNo VARCHAR(255),
-    email VARCHAR(255)
+    email VARCHAR(255),
+    award_points INT
 );
 
-CREATE TABLE IF NOT EXISTS reservations(
+CREATE TABLE IF NOT EXISTS reservations (
     reservation_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     check_in_day DATE,
     check_out_day DATE,
@@ -30,8 +38,57 @@ CREATE TABLE IF NOT EXISTS reservations(
 
 SHOW TABLES;
 
-INSERT INTO rooms(name, price, num_of_guests) VALUES (
+INSERT INTO hotels(name) VALUES (
+    'KeaLifornia'), ('Happy Holidays Hotel');
+
+INSERT INTO rooms(name, price, num_of_guests, hotel_id) VALUES (
                            'Family Room',
                             139.99,
-                            3
+                            1,
+                            2
                           );
+
+
+
+INSERT INTO guests(name, phoneNo, email, award_points) VALUES
+                            ('James Blunt', '22330044', 'bluntmail@hotmail.com', 5),
+                            ('Bobby Parov', '55006699', 'parovs@gmail.com', 2),
+                            ('Debs Docker', '11002299', 'debs_yahoo@yahoo.com', 11);
+
+
+
+INSERT INTO reservations(check_in_day, check_out_day, guest_id, room_id) VALUES
+                            ('2019-09-16', '2019-09-21', 1, 2);
+
+SELECT * FROM hotels;
+SELECT * FROM rooms;
+SELECT * FROM guests;
+SELECT * FROM reservations;
+
+
+# SELECT r.* FROM rooms r
+# WHERE r.room_id NOT IN
+#     (
+#       SELECT r.room_id FROM rooms r
+#       JOIN reservations res ON res.room_id = r.room_id
+#       WHERE
+#       res.check_out_day > '2019-09-01'
+#       AND res.check_in_day < '2019-09-12'
+#  );
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `available_rooms_between_dates`(
+    check_in_day DATE,
+    check_out_day DATE
+)
+    BEGIN
+      SELECT r.* FROM rooms r
+        WHERE r.room_id NOT IN
+        (
+          SELECT r.room_id FROM rooms r
+          JOIN reservations res ON res.room_id = r.room_id
+          WHERE
+          res.check_out_day > check_in_day
+          AND res.check_in_day < check_out_day
+        );
+    END
