@@ -8,7 +8,7 @@ const GuestsPage = () => {
 
     useEffect(() => {
         fetchGuests();
-      });
+      }, []);
 
     const fetchGuests = () => {
         fetch('http://localhost:8080/guests')
