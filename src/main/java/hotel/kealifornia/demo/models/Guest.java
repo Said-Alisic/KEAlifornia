@@ -11,13 +11,13 @@ public class Guest {
     public Guest() {
     }
 
-//    public Guest(int guestId, String firstName, String lastName, String phoneNo, String email) {
-//        this.guestId = guestId;
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.phoneNo = phoneNo;
-//        this.email = email;
-//    }
+    public Guest(int guestId, String name, String phoneNo, String email, int awardPoints) {
+        this.guestId = guestId;
+        this.name = name;
+        this.phoneNo = phoneNo;
+        this.email = email;
+        this.awardPoints = awardPoints;
+    }
 
     public int getGuestId() {
         return guestId;

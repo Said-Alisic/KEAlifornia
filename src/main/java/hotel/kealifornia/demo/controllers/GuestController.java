@@ -3,9 +3,8 @@ package hotel.kealifornia.demo.controllers;
 import hotel.kealifornia.demo.models.Guest;
 import hotel.kealifornia.demo.repositories.GuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +21,18 @@ public class GuestController {
 
         return guestRepo.findAll();
     }
+
+
+    @PostMapping(value="/guests/add")
+    @ResponseBody
+    public Guest handleAddGuest(@RequestBody Guest guest) {
+        System.out.println(guest.toString());
+
+       return guestRepo.addGuestTest(guest);
+
+    }
+
+
+
 
 }
