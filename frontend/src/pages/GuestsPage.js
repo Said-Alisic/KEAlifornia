@@ -26,9 +26,9 @@ const GuestsPage = () => {
         <div className='container mt-4'>
             <h1>Welcome to the Guests page</h1>
             <ul>
-            <li><b>Name - Phone Number - Email - Award Points</b></li>
+            <li><b>Id - Name - Phone Number - Email - Award Points</b></li>
             {guests.map(guest => {
-                return <li>{guest.name} - {guest.phoneNo} - {guest.email} - {guest.awardPoints}</li>
+                return <li>{guest.guestId} - {guest.name} - {guest.phoneNo} - {guest.email} - {guest.awardPoints}</li>
             })}
             </ul>
         </div>

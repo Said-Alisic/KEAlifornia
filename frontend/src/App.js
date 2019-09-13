@@ -11,6 +11,7 @@ import AddReservationPage from 'pages/AddReservation';
 import Navigation from 'components/Navigation/Navigation';
 
 import './App.css';
+import AddGuest from 'pages/AddGuest';
 
 function App () {
   return (
@@ -24,6 +25,7 @@ function App () {
         <Route path='/reservations/add' exact component={AddReservationPage} />
         <Route path='/rooms' exact component={RoomsPage} />
         <Route path='/guests' exact component={GuestsPage} />
+        <Route path='/guests/add' exact component={AddGuest} />
       </main>
 
     </BrowserRouter>

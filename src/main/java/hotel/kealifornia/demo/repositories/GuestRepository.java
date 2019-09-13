@@ -6,6 +6,7 @@ import org.simpleflatmapper.jdbc.spring.SqlParameterSourceFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -29,6 +30,9 @@ public class GuestRepository implements IRepository<Guest> {
             JdbcTemplateMapperFactory
                     .newInstance()
                     .newSqlParameterSourceFactory(Guest.class);
+
+    @Autowired
+    NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
     public List<Guest> findAll() {
@@ -66,14 +70,14 @@ public class GuestRepository implements IRepository<Guest> {
     }
 
     // Gonna test after finishing controllers and view
-    public Guest addGuestTest(Guest guest) {
+    public Guest addGuestTest(Guest guest) throws NullPointerException {
 
-        String sql = "INSERT INTO guests(name, phone, email, award_points)" +
-                " VALUES (:name, :phone, :email, :award_points)";
+        String sql = "INSERT INTO guests(name, phoneNo, email, award_points)" +
+                " VALUES (:name, :phoneNo, :email, :award_points)";
 
         KeyHolder keyholder = new GeneratedKeyHolder();
 
-        jdbcTemplate.update(sql, parameterSourceFactory.newSqlParameterSource(guest), keyholder);
+        namedParameterJdbcTemplate.update(sql, parameterSourceFactory.newSqlParameterSource(guest), keyholder);
 
         guest.setGuestId(keyholder.getKey().intValue());
 
