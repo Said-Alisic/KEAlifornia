@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// Server side url port
 const URL = 'http://localhost:8080';
 
 export const getRooms = () => {
@@ -17,7 +18,12 @@ export const getAvailableRooms = (checkIn, checkOut) => {
 }
 
 // A faster way of writing Get Request for getting guest data from backend
-export const fetchGuests = () => {
+export const getGuests = () => {
   return axios(`${URL}/guests`);
+
+}
+
+export const getGuest = (id) => {
+  return axios(`${URL}/guests/edit/${id}`);
 
 }

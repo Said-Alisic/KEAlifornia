@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import { fetchGuests } from '../repository/Repository';
+import { getGuests } from '../repository/Repository';
+import Container from 'components/Container/Container';
 
 
 const GuestsPage = () => {
@@ -8,7 +9,7 @@ const GuestsPage = () => {
     const [guests, setGuests] = useState([]);
 
     useEffect(() => {
-        fetchGuests()
+        getGuests()
         .then(res => setGuests(res.data));
       }, []);
 
@@ -28,7 +29,7 @@ const GuestsPage = () => {
 */
 
     return (
-        <div className='container mt-4'>
+        <Container>
             <h1>Welcome to the Guests page</h1>
             <ul>
             <li><b>Id - Name - Phone Number - Email - Award Points</b></li>
@@ -36,7 +37,7 @@ const GuestsPage = () => {
                 return <li>{guest.guestId} - {guest.name} - {guest.phoneNo} - {guest.email} - {guest.awardPoints}</li>
             })}
             </ul>
-        </div>
+        </Container>
     )
 
 }
