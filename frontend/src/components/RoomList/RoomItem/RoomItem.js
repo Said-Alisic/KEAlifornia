@@ -1,12 +1,17 @@
 import React from 'react';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
 
 const ReservationItem = ({ room }) => {
   return (
-    <ListItem key={room.roomId} button="true">
-      <ListItemText primary={room.name} />
-    </ListItem>
+    <TableRow key={room.roomId}>
+      <TableCell component="th" scope="row">
+        {room.name}
+      </TableCell>
+      <TableCell align="right">{room.numOfGuests}</TableCell>
+      <TableCell align="right">{room.price}</TableCell>
+      <TableCell align="right">{room.price}</TableCell>
+    </TableRow>
   )
 }
 
