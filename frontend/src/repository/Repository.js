@@ -9,3 +9,8 @@ export const fetchRooms = () => {
 export const fetchReservations = () => {
   return axios(`${URL}/reservations`);
 }
+
+// A faster way of writing Get Request for getting data from backend
+export const fetchGuests = () => {
+  return axios(`${URL}/guests`);
+}

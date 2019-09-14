@@ -23,13 +23,21 @@ public class GuestController {
     }
 
 
-    @PostMapping(value="/guests/add")
+    @PostMapping("/guests/add")
     @ResponseBody
     public Guest handleAddGuest(@RequestBody Guest guest) {
         System.out.println(guest.toString());
 
        return guestRepo.addGuestTest(guest);
 
+    }
+
+    @PutMapping("/guests/edit/{id}")
+    @ResponseBody
+    public Guest handleEditGuest(@RequestBody Guest guest, @PathVariable int id) {
+        System.out.println(guest.toString() + " | id: " + id);
+
+        return null;
     }
 
 
