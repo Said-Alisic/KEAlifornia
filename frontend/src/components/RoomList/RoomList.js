@@ -4,9 +4,9 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Container from 'components/Container/Container';
-import ReservationItem from './ReservationItem/ReservationItem';
+import ReservationItem from './RoomItem/RoomItem';
 
-const ReservationsList = ({ rooms }) => {
+const RoomList = ({ rooms }) => {
   return (
     <Container>
       <Typography variant='h6' gutterBottom>
@@ -34,4 +34,4 @@ const ReservationsList = ({ rooms }) => {
   )
 }
 
-export default ReservationsList;
+export default RoomList;
