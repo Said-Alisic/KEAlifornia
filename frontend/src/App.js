@@ -12,6 +12,7 @@ import Navigation from 'components/Navigation/Navigation';
 
 import './App.css';
 import AddGuest from 'pages/AddGuest';
+import EditGuest from 'pages/EditGuest';
 
 function App () {
   return (
@@ -26,6 +27,7 @@ function App () {
         <Route path='/rooms' exact component={RoomsPage} />
         <Route path='/guests' exact component={GuestsPage} />
         <Route path='/guests/add' exact component={AddGuest} />
+        <Route path='/guests/edit/:guestId' exact component={EditGuest} />
       </main>
 
     </BrowserRouter>

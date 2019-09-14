@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { fetchGuests } from '../repository/Repository';
 
 
 const GuestsPage = () => {
@@ -7,9 +8,13 @@ const GuestsPage = () => {
     const [guests, setGuests] = useState([]);
 
     useEffect(() => {
-        fetchGuests();
+        fetchGuests()
+        .then(res => setGuests(res.data));
       }, []);
 
+
+      // How to fetch JSON object from a Get Request using JS fetch - we utilize axios which makes this easier (check Repository.js)
+/*
     const fetchGuests = () => {
         fetch('http://localhost:8080/guests')
             .then(response => {
@@ -20,7 +25,7 @@ const GuestsPage = () => {
             })
 
         };
-
+*/
 
     return (
         <div className='container mt-4'>
