@@ -7,7 +7,6 @@ import hotel.kealifornia.demo.repositories.GuestRepository;
 import hotel.kealifornia.demo.repositories.ReservationRepository;
 import hotel.kealifornia.demo.repositories.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +28,7 @@ public class ReservationController {
     @Autowired
     GuestRepository guestRepo;
 
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
     @GetMapping("/reservations")
     @ResponseBody
@@ -40,12 +39,20 @@ public class ReservationController {
         return reservations;
     }
 
+    // Get available rooms in between provided dates
+    @GetMapping("/reservations/search/{check_in_date}/{check_out_date}")
+    @ResponseBody
+    public List<Room> searchRoomsPage(@PathVariable String check_in_date, @PathVariable String check_out_date) {
 
-    @GetMapping("/reservations/search")
-    public String searchRoomsPage() {
+        LocalDate checkIn = LocalDate.parse(check_in_date, formatter);
+        LocalDate checkOut = LocalDate.parse(check_out_date, formatter);
 
-        return "reservations/search";
+        List<Room> availableRooms = roomRepo.findRoomsBetweenDates(checkIn, checkOut);
+
+        return availableRooms;
     }
+
+
 
     @PostMapping("/reservations/search")
     public String displayAvailableRooms(@RequestParam String checkInDate, @RequestParam String checkOutDate, Model m) {

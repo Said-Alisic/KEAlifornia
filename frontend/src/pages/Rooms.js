@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchRooms } from 'repository/Repository';
-
+import { getRooms } from 'repository/Repository';
 import Container from 'components/Container/Container';
 
 const RoomsPage = props => {
@@ -8,7 +7,7 @@ const RoomsPage = props => {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
-    fetchRooms()
+    getRooms()
       .then(res => setRooms(res.data));
   }, [])
 

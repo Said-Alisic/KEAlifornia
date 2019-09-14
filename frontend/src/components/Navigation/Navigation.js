@@ -1,20 +1,53 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link as RouterLink } from 'react-router-dom';
 
-import './Navigation.css';
+import { makeStyles } from '@material-ui/core/styles';
+import { AppBar, MenuList, MenuItem, Container, Link } from '@material-ui/core';
+
+const useStyles = makeStyles(theme => ({
+  container: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  brand: {
+    color: 'white',
+    fontSize: '2rem',
+    fontWeight: 'bold'
+  },
+  menu: {
+    display: 'flex'
+  },
+  active: {
+    background: theme.palette.action.selected
+  }
+}));
 
 const Navigation = props => {
+
+  const classes = useStyles();
+
   return (
-    <header className="masthead mb-5">
-      <div className="inner container">
-        <h2 className="masthead-brand">
-          <NavLink to="/">KEAlifornia</NavLink>
-        </h2>
-        <nav className="nav nav-masthead justify-content-center">
-          <NavLink className="nav-link" to="/rooms">Rooms</NavLink>
-          <NavLink className="nav-link" to="/reservations">Reservations</NavLink>
-        </nav>
-      </div>
+    <header>
+      <AppBar position='static'>
+        <Container className={classes.container}>
+          <Link component={RouterLink} exact='true' to='/' className={classes.brand} underline='none'>
+            KEAlifornia
+          </Link>
+
+          <MenuList className={classes.menu}>
+            <MenuItem component={NavLink} exact='true' to='/rooms' activeClassName={classes.active}>
+              Hotels
+            </MenuItem>
+            <MenuItem component={NavLink} exact='true' to='/rooms' activeClassName={classes.active}>
+              Rooms
+            </MenuItem>
+            <MenuItem component={NavLink} exact='true' to='/reservations' activeClassName={classes.active}>
+              Reservations
+            </MenuItem>
+          </MenuList>
+        </Container>
+      </AppBar>
     </header>
   )
 }
