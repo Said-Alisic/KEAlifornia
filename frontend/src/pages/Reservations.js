@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { fetchReservations } from '../repository/Repository';
-
+import { getReservations } from '../repository/Repository';
 import Container from 'components/Container/Container';
-import AddButton from 'components/Buttons/AddButton/AddButton';
+import AddButtonLink from 'components/Buttons/AddButton/AddButtonLink';
 
 const ReservationsPage = props => {
 
   const [reservations, setReservations] = useState([]);
 
   useEffect(() => {
-    fetchReservations()
+    getReservations()
       .then(res => setReservations(res.data));
 
   }, [])
@@ -29,7 +28,7 @@ const ReservationsPage = props => {
         </ul>
       </div>
 
-      <AddButton />
+      <AddButtonLink to='/reservations/add' />
 
     </Container>
   )

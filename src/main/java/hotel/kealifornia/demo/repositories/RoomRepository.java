@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -27,6 +28,18 @@ public class RoomRepository implements IRepository<Room> {
                 .newResultSetExtractor(Room.class);
 
 
+    // Method calls prepared statement from mysql and gets back available rooms in the provided period
+    public List<Room> findRoomsBetweenDates(LocalDate checkInDate, LocalDate checkOutDate) {
+
+        String sql = "CALL get_free_rooms_between_dates(?, ?)";
+
+        List<Room> rooms = jdbc.query(sql, new Object[] {checkInDate, checkOutDate}, new BeanPropertyRowMapper<>(Room.class));
+
+        return rooms;
+    }
+
+
+
     @Override
     public List<Room> findAll() {
 //        String sql =
@@ -39,7 +52,7 @@ public class RoomRepository implements IRepository<Room> {
         String sql = "SELECT * FROM rooms";
 
 
-        List<Room> rooms = jdbc.query(sql, resultSetExtractor);
+        List<Room> rooms = jdbc.query(sql, new BeanPropertyRowMapper<>(Room.class));
         return rooms;
     }
 
