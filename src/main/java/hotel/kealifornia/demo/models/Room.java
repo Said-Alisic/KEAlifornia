@@ -8,6 +8,7 @@ public class Room {
     private String name;
     private double price;
     private int numOfGuests;
+    private int hotelId;
     private List<Reservation> reservations;
 
     public int getRoomId() {
@@ -50,6 +51,14 @@ public class Room {
         this.reservations = reservations;
     }
 
+    public int getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(int hotelId) {
+        this.hotelId = hotelId;
+    }
+
     @Override
     public String toString() {
         return "Room{" +
@@ -57,6 +66,7 @@ public class Room {
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", numOfGuests=" + numOfGuests +
+                ", hotelId=" + hotelId +
                 ", reservations=" + reservations +
                 '}';
     }

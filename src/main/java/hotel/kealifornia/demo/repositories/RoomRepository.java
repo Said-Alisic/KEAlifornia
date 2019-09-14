@@ -2,9 +2,11 @@ package hotel.kealifornia.demo.repositories;
 
 import hotel.kealifornia.demo.models.Room;
 import org.simpleflatmapper.jdbc.spring.JdbcTemplateMapperFactory;
+import org.simpleflatmapper.jdbc.spring.SqlParameterSourceFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -20,6 +22,9 @@ public class RoomRepository implements IRepository<Room> {
     @Autowired
     JdbcTemplate jdbc;
 
+    @Autowired
+    NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
     // https://arnaudroger.github.io/blog/2017/06/13/jdbc-template-one-to-many.html
     private final ResultSetExtractor<List<Room>> resultSetExtractor =
             JdbcTemplateMapperFactory
@@ -27,15 +32,18 @@ public class RoomRepository implements IRepository<Room> {
                 .addKeys("roomId")
                 .newResultSetExtractor(Room.class);
 
+    private final SqlParameterSourceFactory<Room> parameterSourceFactory =
+            JdbcTemplateMapperFactory
+                    .newInstance()
+                    .newSqlParameterSourceFactory(Room.class);
+
 
     // Method calls prepared statement from mysql and gets back available rooms in the provided period
     public List<Room> findRoomsBetweenDates(LocalDate checkInDate, LocalDate checkOutDate) {
 
-        String sql = "CALL get_free_rooms_between_dates(?, ?)";
+        String sql = "CALL available_rooms_between_dates(?, ?)";
 
-        List<Room> rooms = jdbc.query(sql, new Object[] {checkInDate, checkOutDate}, new BeanPropertyRowMapper<>(Room.class));
-
-        return rooms;
+        return jdbc.query(sql, new Object[] {checkInDate, checkOutDate}, new BeanPropertyRowMapper<>(Room.class));
     }
 
 
@@ -51,33 +59,32 @@ public class RoomRepository implements IRepository<Room> {
 
         String sql = "SELECT * FROM rooms";
 
+        return jdbc.query(sql, new BeanPropertyRowMapper<>(Room.class));
+    }
 
-        List<Room> rooms = jdbc.query(sql, new BeanPropertyRowMapper<>(Room.class));
-        return rooms;
+    public List<Room> findRoomsByHotelId(int id) {
+        String sql = "SELECT * FROM rooms WHERE hotel_id = " + id;
+
+        return jdbc.query(sql, new BeanPropertyRowMapper<>(Room.class));
+
     }
 
     @Override
     public Room findOne(int id) {
         String sql = "SELECT * FROM rooms WHERE room_id = ?";
-        Room room = jdbc.queryForObject(sql, new Object[] {id}, new BeanPropertyRowMapper<>(Room.class));
 
-        return room;
+        return jdbc.queryForObject(sql, new Object[] {id}, new BeanPropertyRowMapper<>(Room.class));
     }
 
 
     @Override
-    public Room add(Room room) {
-        String sql = "INSERT INTO rooms VALUES (null, ?, ?, ?)";
+    public Room add(Room room) throws NullPointerException {
+        String sql = "INSERT INTO rooms(name, price, num_of_guests, hotel_id)" +
+                " VALUES (:name ,:price , :num_of_guests, :hotel_id)";
 
         KeyHolder keyholder = new GeneratedKeyHolder();
 
-        jdbc.update(Connection -> {
-            PreparedStatement ps = Connection.prepareStatement(sql, new String[]{"room_id"});
-            ps.setString(1, room.getName());
-            ps.setDouble(2, room.getPrice());
-            ps.setInt(3, room.getNumOfGuests());
-
-            return ps;}, keyholder);
+        namedParameterJdbcTemplate.update(sql, parameterSourceFactory.newSqlParameterSource(room), keyholder);
 
         room.setRoomId(keyholder.getKey().intValue());
 

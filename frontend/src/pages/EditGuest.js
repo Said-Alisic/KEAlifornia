@@ -10,6 +10,11 @@ const EditGuest = () => {
     const [awardPoints, setAwardPoints] = useState(0)
 
 
+    const handleEvent = () => {
+
+        
+    }
+
 
     return (
         <div>

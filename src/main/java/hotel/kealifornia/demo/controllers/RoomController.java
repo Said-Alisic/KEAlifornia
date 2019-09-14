@@ -17,32 +17,22 @@ public class RoomController {
 
     @GetMapping("/rooms")
     @ResponseBody
-    public List<Room> getAll() {
-        List<Room> rooms = roomRepo.findAll();
-
-        return rooms;
-    }
-    
-    @GetMapping("/rooms/add")
-    public String addRoom(Model model) {
-        model.addAttribute("newRoom", new Room());
-
-        return "rooms/add-room";
+    public List<Room> getAllRoomsInHotel(/*@PathVariable int hotelId*/) {
+//        System.out.println(hotelId);
+//        return roomRepo.findRoomsByHotelId(hotelId);
+        return roomRepo.findAll();
     }
 
     @PostMapping("/rooms/add")
-    public String handleAddRoom(@ModelAttribute Room room) {
-        try {
-            System.out.println(roomRepo.add(room));
-            return "redirect:/rooms";
-        } catch (Exception e) {
-            return "redirect:/rooms/add?error=true";
-        }
+    @ResponseBody
+    public Room handleAddRoom(@ModelAttribute Room room) {
+        System.out.println(roomRepo.add(room));
 
+        return room;
     }
 
 
-    @GetMapping("/rooms/delete/{id}")
+    @DeleteMapping("/rooms/delete/{id}")
     public String handleDeleteRoom(@PathVariable int id)  {
         System.out.println(id);
         roomRepo.delete(id);
@@ -50,14 +40,8 @@ public class RoomController {
         return "redirect:/rooms";
     }
 
-    @GetMapping("/rooms/update/{id}")
-    public String updateRoom(Model model, @PathVariable int id) {
-        model.addAttribute("updateRoom", roomRepo.findOne(id));
 
-        return "rooms/update-room";
-    }
-
-    @PostMapping("/rooms/update/{id}")
+    @PutMapping("/rooms/update/{id}")
     public String handleUpdateRoom(@ModelAttribute Room room, @PathVariable int id) {
 
         try {
