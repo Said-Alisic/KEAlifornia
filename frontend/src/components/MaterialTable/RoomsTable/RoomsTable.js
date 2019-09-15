@@ -8,7 +8,7 @@ const RoomsTable = (props) => {
   const [rooms, setRooms] = useState({
       columns: [
         { title: 'Name', field: 'name' },
-        { title: 'Price', field: 'price' },
+        { title: 'Price', field: 'price', type: 'numeric'},
         { title: 'Number of guests', field: 'numOfGuests', type: 'numeric' },
         { title: 'Hotel id', field: 'hotelId', type: 'numeric' },
         {
