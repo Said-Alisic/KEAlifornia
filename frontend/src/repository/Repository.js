@@ -7,6 +7,14 @@ export const getRooms = () => {
   return axios(`${URL}/rooms`);
 }
 
+export const addRoom = (room) => {
+  return axios.post(`${URL}/rooms/add`, room)
+}
+
+export const updateRoom = (room) => {
+  return axios.put(`${URL}/rooms/update`, room)
+}
+
 export const getReservations = () => {
   return axios(`${URL}/reservations`);
 }

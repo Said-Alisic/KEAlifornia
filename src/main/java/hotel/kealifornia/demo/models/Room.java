@@ -11,6 +11,17 @@ public class Room {
     private int hotelId;
     private List<Reservation> reservations;
 
+    public Room() {
+    }
+
+    public Room(int roomId, String name, double price, int numOfGuests, int hotelId) {
+        this.roomId = roomId;
+        this.name = name;
+        this.price = price;
+        this.numOfGuests = numOfGuests;
+        this.hotelId = hotelId;
+    }
+
     public int getRoomId() {
         return roomId;
     }

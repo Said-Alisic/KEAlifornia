@@ -1,55 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MaterialTable from 'material-table';
+import { getRooms, addRoom, updateRoom } from 'repository/Repository';
 
-const RoomsTable = (props, { name, price, numOfGuests, hotelId }) => {
+const RoomsTable = (props) => {
 
-    const [room, setRoom] = useState({
-        columns: [
-          { title: 'Name', field: 'name' },
-          { title: 'Price', field: 'price' },
-          { title: 'Number of guests', field: 'numOfGuests', type: 'numeric' },
-          {
-            lookup: { 34: 'KeaLifornia', 63: 'Happy Holidays Hotel' },
-          },
-        ],
-        
-        data: [
-          { name: props.name, price: props.price, numOfGuests: props.numOfGuests, hotelId: props.hotelId },
-        ],
-      });
+  //const [rooms, setRooms] = useState([]);
+  const [rooms, setRooms] = useState({
+      columns: [
+        { title: 'Name', field: 'name' },
+        { title: 'Price', field: 'price' },
+        { title: 'Number of guests', field: 'numOfGuests', type: 'numeric' },
+        { title: 'Hotel id', field: 'hotelId', type: 'numeric' },
+        {
+          lookup: { 34: 'KeaLifornia', 63: 'Happy Holidays Hotel' },
+        },
+      ],
+      data: props.rooms,
+    
+    });
+
+    
+  useEffect(() => {
+    getRooms()
+      .then(res => setRooms({...rooms, data: res.data}));
+  }, [])
 
 
     return (
-        <MaterialTable
+        <MaterialTable  
           title="Editable Example"
-          columns={room.columns}
-          data={room.data}
+          columns={rooms.columns}
+          data={rooms.data}
           editable={{
             onRowAdd: newData =>
               new Promise(resolve => {
                 setTimeout(() => {
                   resolve();
-                  const data = [...room.data];
+                  const data = [...rooms.data];
                   data.push(newData);
-                  setRoom({ ...room, data });
+                  setRooms({ ...rooms, data });
                 }, 600);
+                addRoom(newData);
               }),
             onRowUpdate: (newData, oldData) =>
               new Promise(resolve => {
                 setTimeout(() => {
                   resolve();
-                  const data = [...room.data];
+                  const data = [...rooms.data];
                   data[data.indexOf(oldData)] = newData;
-                  setRoom({ ...room, data });
+                  setRooms({ ...rooms, data });
                 }, 600);
+                console.log(newData);
+                updateRoom(newData);
               }),
             onRowDelete: oldData =>
               new Promise(resolve => {
                 setTimeout(() => {
                   resolve();
-                  const data = [...room.data];
+                  const data = [...rooms.data];
                   data.splice(data.indexOf(oldData), 1);
-                  setRoom({ ...room, data });
+                  setRooms({ ...rooms, data });
                 }, 600);
               }),
           }}

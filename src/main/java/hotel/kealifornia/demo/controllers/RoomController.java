@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class RoomController {
 
@@ -25,30 +26,26 @@ public class RoomController {
 
     @PostMapping("/rooms/add")
     @ResponseBody
-    public Room handleAddRoom(@ModelAttribute Room room) {
-        System.out.println(roomRepo.add(room));
-
+    public Room handleAddRoom(@RequestBody Room room) {
+        System.out.println(roomRepo.add(room).toString());
         return room;
     }
 
 
     @DeleteMapping("/rooms/delete/{id}")
-    public String handleDeleteRoom(@PathVariable int id)  {
-        System.out.println(id);
-        roomRepo.delete(id);
+    public int handleDeleteRoom(@PathVariable int id)  {
+        System.out.println(id + " - " + roomRepo.delete(id));
 
-        return "redirect:/rooms";
+        return id;
     }
 
 
-    @PutMapping("/rooms/update/{id}")
-    public String handleUpdateRoom(@ModelAttribute Room room, @PathVariable int id) {
+    @PutMapping("/rooms/update")
+    @ResponseBody
+    public Room handleUpdateRoom(@RequestBody Room room) {
+        System.out.println(roomRepo.update(room.getRoomId(), room));
 
-        try {
-            System.out.println("Test room handle update: " + roomRepo.update(id, room));
-            return "redirect:/rooms";
-        } catch (Exception e) {
-            return "redirect:/rooms/update/{id}?error";
-        }
+        return room;
     }
 }
+
